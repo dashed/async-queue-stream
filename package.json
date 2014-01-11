@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "istanbul test --report html -x 'vendor/**' _mocha",
-    "test-travis": "istanbul cover -x 'vendor/**' _mocha -- -R spec;A=$?;cat coverage/lcov.info | coveralls;exit $A",
+    "test-travis": "istanbul cover -x 'vendor/**' _mocha -- -R spec;A=$?;cat coverage/lcov.info | coveralls;exit $A"
   },
   "repository": {
     "type": "git",

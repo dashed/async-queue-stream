@@ -7,7 +7,15 @@ It takes an asynchronous function and queue stream chunks. Then the queue execut
 
 Any error will be emitted to `opts.error_event` event. By default, the stream will not stop on error; this can be configured via `opts.stop_on_error`.
 
-## asyncqueue(write_fn [[, end_fn], options])
+## Install
+
+1. Install [Node.js](http://nodejs.org/)
+
+2.  Run: `npm install async-queue-stream`
+
+## API
+
+### asyncqueue(write_fn [[, end_fn], options])
 
 **Arguments**
 

@@ -1,6 +1,6 @@
 {
   "name": "async-queue-stream",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Stream using async.queue under the hood.",
   "main": "index.js",
   "keywords": [

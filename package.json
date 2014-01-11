@@ -1,0 +1,29 @@
+{
+  "name": "async-queue-stream",
+  "version": "0.0.1",
+  "description": "Stream using async.queue under the hood.",
+  "main": "index.js",
+  "scripts": {
+    "test": "istanbul test --report html -x 'vendor/**' _mocha",
+    "test-travis": "istanbul cover -x 'vendor/**' _mocha -- -R spec;A=$?;cat coverage/lcov.info | coveralls;exit $A",
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dashed/async-queue-stream.git"
+  },
+  "author": "Alberto Leal (https://github.com/dashed)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Dashed/async-queue-stream/issues"
+  },
+  "homepage": "https://github.com/Dashed/async-queue-stream",
+  "devDependencies": {
+    "mocha": "*",
+    "chai": "*",
+    "istanbul": "*",
+    "coveralls": "~2"
+  },
+  "dependencies": {
+    "through": "~2"
+  }
+}

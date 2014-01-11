@@ -10,8 +10,8 @@ function only_once(fn) {
     return function() {
         if (called) throw new Error("Callback was already called.");
         called = true;
-        fn.apply(root, arguments);
-    }
+        fn.apply(this, arguments);
+    };
 }
 
 async.setImmediate = setImmediate;
@@ -130,7 +130,7 @@ var queueAsync = function (write_fn, end_fn, opts) {
     // set up queue and its hard worker
     var worker = function(_work, callback) {
 
-      var _args, _f, _this, _cb;
+      var _args, _f, _this;
 
       _f = _work.f;
       _this = _work._this;
@@ -165,7 +165,7 @@ var queueAsync = function (write_fn, end_fn, opts) {
         if(data !== void 0) {
             return stream.emit('data', data), cb();
         }
-    }
+    };
 
     // _work_callback is called when
     var _work_callback = function(err) {
@@ -174,12 +174,11 @@ var queueAsync = function (write_fn, end_fn, opts) {
 
             return this.emit(opts.error_event, err);
         }
-    }
+    };
 
     var _write = function(data) {
 
-        // _write_callback_binded = _write_callback.bind(this);
-        _work_callback_binded = _work_callback.bind(this);
+        var _work_callback_binded = _work_callback.bind(this);
 
         var work_package = {};
         work_package.f = write_fn;
@@ -199,11 +198,11 @@ var queueAsync = function (write_fn, end_fn, opts) {
     var stream = through(_write, function(){ _empty = true; });
 
     // Clean up
-    queue.drain = function(err) {
+    queue.drain = function() {
         if(_empty) {
             end_fn.bind(stream)();
         }
-    }
+    };
 
     return stream;
 };

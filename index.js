@@ -110,7 +110,8 @@ var queueAsync = function (write_fn, end_fn, opts) {
 
     var self = this;
 
-    this.opts = opts || {};
+    opts = opts || {};
+    this.opts = {};
 
     // support queueAsync(write_fn, opts)
     if(typeof end_fn == 'object' && end_fn.constructor == Object) {

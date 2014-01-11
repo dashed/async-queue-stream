@@ -3,6 +3,14 @@
   "version": "0.0.2",
   "description": "Stream using async.queue under the hood.",
   "main": "index.js",
+  "keywords": [
+    "stream",
+    "streams",
+    "user-streams",
+    "pipe",
+    "async",
+    "queue"
+  ],
   "scripts": {
     "test": "istanbul test --report html -x 'vendor/**' _mocha",
     "test-travis": "istanbul cover -x 'vendor/**' _mocha -- -R spec;A=$?;cat coverage/lcov.info | coveralls;exit $A"

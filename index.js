@@ -171,7 +171,7 @@ var queueAsync = function (write_fn, end_fn, opts) {
 
         try{
             return cb();
-        } catch() {
+        } catch(err) {
         }
     };
 

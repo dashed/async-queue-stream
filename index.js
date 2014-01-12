@@ -127,6 +127,9 @@ var queueAsync = function (write_fn, end_fn, opts) {
     // toggle to stop on error
     var error_raised = false;
 
+    // check if the queue has ever been used
+    var queue_used = false;
+
     // set up queue and its hard worker
     var worker = function(_work, callback) {
 
@@ -191,14 +194,24 @@ var queueAsync = function (write_fn, end_fn, opts) {
         work_package.write_cb = _write_callback;
         work_package.write_cb_stream = this;
 
-        if(error_raised !== true)
+        if(error_raised !== true)  {
           queue.push(work_package, _work_callback_binded);
+          queue_used = true;
+        }
 
     };
 
     var _empty = false;
 
-    var stream = through(_write, function(){ _empty = true; });
+    var stream = through(_write, function(){
+      _empty = true;
+
+      // if the queue has never been used,
+      // force end_fn
+      if(queue_used === false) {
+        end_fn.bind(stream)();
+      }
+    });
 
     // Clean up
     queue.drain = function() {

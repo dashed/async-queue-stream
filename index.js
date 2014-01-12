@@ -108,10 +108,7 @@ async.queue = function (worker, concurrency) {
  */
 var queueAsync = function (write_fn, end_fn, opts) {
 
-    var self = this;
-
     opts = opts || {};
-    this.opts = {};
 
     // support queueAsync(write_fn, opts)
     if(typeof end_fn == 'object' && end_fn.constructor == Object) {
@@ -119,10 +116,10 @@ var queueAsync = function (write_fn, end_fn, opts) {
       end_fn = function() {this.emit('end');};
     }
 
-    this.opts.concurrency = opts.concurrency || 1;
+    opts.concurrency = opts.concurrency || 1;
 
-    this.opts.error_event = opts.error_event || 'failure';
-    this.opts.stop_on_error = !!opts.stop_on_error;
+    opts.error_event = opts.error_event || 'failure';
+    opts.stop_on_error = !!opts.stop_on_error;
 
     write_fn = write_fn || function(data, cb) {cb(null,data);};
     end_fn = end_fn || function() {this.emit('end');};
@@ -149,7 +146,7 @@ var queueAsync = function (write_fn, end_fn, opts) {
         return _f.apply(_this, _args);
     };
 
-    var queue = async.queue(worker, this.opts.concurrency);
+    var queue = async.queue(worker, opts.concurrency);
 
     // callback signature ref.
     //
@@ -173,9 +170,9 @@ var queueAsync = function (write_fn, end_fn, opts) {
     // _work_callback is called when
     var _work_callback = function(err) {
         if(err) {
-            if(self.opts.stop_on_error && !error_raised) error_raised = true;
+            if(opts.stop_on_error && !error_raised) error_raised = true;
 
-            return this.emit(self.opts.error_event, err);
+            return this.emit(opts.error_event, err);
         }
     };
 
@@ -210,4 +207,4 @@ var queueAsync = function (write_fn, end_fn, opts) {
     return stream;
 };
 
-module.exports = queueAsync;
+module.exports = queueAsync.bind({});

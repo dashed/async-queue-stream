@@ -163,8 +163,10 @@ var queueAsync = function (write_fn, end_fn, opts) {
         }
 
         if(data !== void 0) {
-            return stream.emit('data', data), cb();
+            stream.emit('data', data);
         }
+
+        return cb();
     };
 
     // _work_callback is called when

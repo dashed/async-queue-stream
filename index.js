@@ -159,23 +159,24 @@ var queueAsync = function (write_fn, end_fn, opts) {
     // reminder: cb is async.queue callback
     var _write_callback = function(stream, cb, err, data) {
         if(err) {
-            return cb(err);
+            if(opts.stop_on_error && !error_raised)
+                error_raised = true;
+
+            stream.emit(opts.error_event, err);
         }
 
         if(data !== void 0) {
             stream.emit('data', data);
         }
 
-        return cb();
+        try{
+            return cb();
+        } catch() {
+        }
     };
 
     // _work_callback is called when
     var _work_callback = function(err) {
-        if(err) {
-            if(opts.stop_on_error && !error_raised) error_raised = true;
-
-            return this.emit(opts.error_event, err);
-        }
     };
 
     var _write = function(data) {
